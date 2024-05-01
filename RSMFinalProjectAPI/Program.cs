@@ -23,6 +23,9 @@ builder.Services.AddDbContext<AdvWorksDbContext>(options =>
 builder.Services.AddTransient<ISalesReportRepository, SalesReportRepository>();
 builder.Services.AddTransient<ISalesReportService, SalesReportService>();
 
+builder.Services.AddTransient<ISalesPerformanceRepository, SalesPerformanceRepository>();
+builder.Services.AddTransient<ISalesPerformanceService, SalesPerformanceService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

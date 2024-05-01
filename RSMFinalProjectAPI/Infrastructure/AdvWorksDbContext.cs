@@ -18,6 +18,7 @@
         }
 
         public virtual DbSet<vSalesReport> SalesReports { get; set; }
+        public virtual DbSet<vSalesPerformance> SalesPerformance { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
