@@ -51,9 +51,17 @@
               "target": "Package",
               "version": "[8.0.4, )"
             },
+            "PdfSharp": {
+              "target": "Package",
+              "version": "[1.50.5147, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.4.0, )"
+            },
+            "System.Drawing.Common": {
+              "target": "Package",
+              "version": "[8.0.4, )"
             },
             "X.PagedList": {
               "target": "Package",
