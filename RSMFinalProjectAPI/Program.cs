@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using RSMFinalProjectAPI.Application.Services;
 using RSMFinalProjectAPI.Domain.Interfaces;
 using RSMFinalProjectAPI.Infrastructure;
+using RSMFinalProjectAPI.Infrastructure.Database;
 using RSMFinalProjectAPI.Infrastructure.Repositories;
 using RSMFinalProjectAPI.Middleware;
 
@@ -27,6 +28,15 @@ builder.Services.AddTransient<ISalesPerformanceRepository, SalesPerformanceRepos
 builder.Services.AddTransient<ISalesPerformanceService, SalesPerformanceService>();
 
 var app = builder.Build();
+
+// Instance of DatabaseInitializer
+using var scope = app.Services.CreateScope();
+var services = scope.ServiceProvider;
+var dbContext = services.GetRequiredService<AdvWorksDbContext>();
+var dbInitializer = new DatabaseInitializer(dbContext);
+
+// Initialization DB
+await dbInitializer.InitializeAsync();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
