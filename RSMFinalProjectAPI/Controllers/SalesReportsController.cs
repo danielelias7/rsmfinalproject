@@ -1,6 +1,8 @@
 namespace RSMFinalProjectAPI.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
+    using System.IO;
+    using System.Threading.Tasks;
 
     using RSMFinalProjectAPI.Application.DTOs;
     using RSMFinalProjectAPI.Domain.Interfaces;
@@ -25,9 +27,11 @@ namespace RSMFinalProjectAPI.Controllers
         [HttpGet("GetPdfReport")]
         public async Task<IActionResult> GetPdfReport(int pageNumber, int pageSize, int? orderId, string? orderDate, string? productName, string? productCategory)
         {
-            await _service.CreatePdfReport(pageNumber, pageSize, orderId, orderDate, productName, productCategory);
-            var response = new { message = "Pdf created successfully." };
-            return Ok(response);
+            // Generate the PDF report
+            var pdfStream = await _service.CreatePdfReport(pageNumber, pageSize, orderId, orderDate, productName, productCategory);
+
+            // Return the PDF as a stream to the client
+            return File(pdfStream, "application/pdf", "SalesReport.pdf");
         }
     }
 }

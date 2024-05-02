@@ -11,6 +11,7 @@ namespace RSMFinalProjectAPI.Application.Services
     using PdfSharp.Pdf;
     using PdfSharp.Drawing;
     using System.Diagnostics;
+    using PdfSharp;
 
     public class SalesReportService : ISalesReportService
     {
@@ -80,27 +81,28 @@ namespace RSMFinalProjectAPI.Application.Services
             return salesReportDto;
         }
 
-        public async Task CreatePdfReport(int pageNumber, int pageSize, int? orderId, string? orderDate, string? productName, string? productCategory)
+        public async Task<Stream> CreatePdfReport(int pageNumber, int pageSize, int? orderId, string? orderDate, string? productName, string? productCategory)
         {
             var salesReportDto = await GetAll(pageNumber, pageSize, orderId, orderDate, productName, productCategory);
 
             // new PDF
-            PdfDocument document = new PdfDocument();
+            PdfDocument document = new();
             document.Info.Title = "Generated Sales Report";
 
-            // Blank page
+            // Blank page with Landscape orientation
             PdfPage page = document.AddPage();
+            page.Orientation = PageOrientation.Landscape;
 
             // Fonts
-            XFont font = new XFont("Verdana", 10);
-            XFont fontTitle = new XFont("Verdana", 12, XFontStyle.Bold);
+            XFont font = new("Verdana", 8);
+            XFont fontTitle = new("Verdana", 10, XFontStyle.Bold);
 
             // XGraphics to draw
             XGraphics gfx = XGraphics.FromPdfPage(page);
 
             // Titles
-            string[] columnTitles = { "Order ID", "Order Date", "Product", "Category", "Total Price" };
-            double[] columnWidths = { 100, 100, 200, 100, 100 };
+            string[] columnTitles = { "Order ID", "Order Date", "Product", "Category", "Unit Price", "Quantity", "Name", "Shipping Address", "Billing Address", "Total Price" };
+            double[] columnWidths = { 80, 80, 100, 80, 80, 60, 80, 100, 100, 80 }; // Ajusta los anchos según sea necesario
             double tableHeight = 20;
 
             // Draw titles
@@ -117,34 +119,66 @@ namespace RSMFinalProjectAPI.Application.Services
             foreach (var sales in salesReportDto)
             {
                 x = 0;
-                gfx.DrawRectangle(XBrushes.LightGray, x, y, columnWidths[0], tableHeight);
-                gfx.DrawString(sales.OrderId.ToString(), font, XBrushes.Black, new XRect(x, y, columnWidths[0], tableHeight), XStringFormats.Center);
-                x += columnWidths[0];
+                int columnIndex = 0;
 
-                gfx.DrawRectangle(XBrushes.LightGray, x, y, columnWidths[1], tableHeight);
-                gfx.DrawString(sales.OrderDate.ToString(), font, XBrushes.Black, new XRect(x, y, columnWidths[1], tableHeight), XStringFormats.Center);
-                x += columnWidths[1];
+                // Order ID
+                gfx.DrawRectangle(XBrushes.LightGray, x, y, columnWidths[columnIndex], tableHeight);
+                gfx.DrawString(sales.OrderId.ToString(), font, XBrushes.Black, new XRect(x, y, columnWidths[columnIndex], tableHeight), XStringFormats.Center);
+                x += columnWidths[columnIndex++];
 
-                gfx.DrawRectangle(XBrushes.LightGray, x, y, columnWidths[2], tableHeight);
-                gfx.DrawString(sales.ProductName, font, XBrushes.Black, new XRect(x, y, columnWidths[2], tableHeight), XStringFormats.Center);
-                x += columnWidths[2];
+                // Order Date
+                gfx.DrawRectangle(XBrushes.LightGray, x, y, columnWidths[columnIndex], tableHeight);
+                gfx.DrawString(sales.OrderDate?.ToString("d") ?? "N/A", font, XBrushes.Black, new XRect(x, y, columnWidths[columnIndex], tableHeight), XStringFormats.Center);
+                x += columnWidths[columnIndex++];
 
-                gfx.DrawRectangle(XBrushes.LightGray, x, y, columnWidths[3], tableHeight);
-                gfx.DrawString(sales.ProductCategory, font, XBrushes.Black, new XRect(x, y, columnWidths[3], tableHeight), XStringFormats.Center);
-                x += columnWidths[3];
+                // Product Name
+                gfx.DrawRectangle(XBrushes.LightGray, x, y, columnWidths[columnIndex], tableHeight);
+                gfx.DrawString(sales.ProductName, font, XBrushes.Black, new XRect(x, y, columnWidths[columnIndex], tableHeight), XStringFormats.Center);
+                x += columnWidths[columnIndex++];
 
-                gfx.DrawRectangle(XBrushes.LightGray, x, y, columnWidths[4], tableHeight);
+                // Product Category
+                gfx.DrawRectangle(XBrushes.LightGray, x, y, columnWidths[columnIndex], tableHeight);
+                gfx.DrawString(sales.ProductCategory, font, XBrushes.Black, new XRect(x, y, columnWidths[columnIndex], tableHeight), XStringFormats.Center);
+                x += columnWidths[columnIndex++];
+
+                // Unit Price
+                gfx.DrawRectangle(XBrushes.LightGray, x, y, columnWidths[columnIndex], tableHeight);
+                gfx.DrawString(sales.UnitPrice?.ToString("C") ?? "N/A", font, XBrushes.Black, new XRect(x, y, columnWidths[columnIndex], tableHeight), XStringFormats.Center);
+                x += columnWidths[columnIndex++];
+
+                // Quantity
+                gfx.DrawRectangle(XBrushes.LightGray, x, y, columnWidths[columnIndex], tableHeight);
+                gfx.DrawString(sales.Quantity.ToString(), font, XBrushes.Black, new XRect(x, y, columnWidths[columnIndex], tableHeight), XStringFormats.Center);
+                x += columnWidths[columnIndex++];
+
+                // Name (FirstName LastName)
+                gfx.DrawRectangle(XBrushes.LightGray, x, y, columnWidths[columnIndex], tableHeight);
+                gfx.DrawString($"{sales.FirstName} {sales.LastName}", font, XBrushes.Black, new XRect(x, y, columnWidths[columnIndex], tableHeight), XStringFormats.Center);
+                x += columnWidths[columnIndex++];
+
+                // Shipping Address
+                gfx.DrawRectangle(XBrushes.LightGray, x, y, columnWidths[columnIndex], tableHeight);
+                gfx.DrawString(sales.ShippingAddress, font, XBrushes.Black, new XRect(x, y, columnWidths[columnIndex], tableHeight), XStringFormats.Center);
+                x += columnWidths[columnIndex++];
+
+                // Billing Address
+                gfx.DrawRectangle(XBrushes.LightGray, x, y, columnWidths[columnIndex], tableHeight);
+                gfx.DrawString(sales.BillingAddress, font, XBrushes.Black, new XRect(x, y, columnWidths[columnIndex], tableHeight), XStringFormats.Center);
+                x += columnWidths[columnIndex++];
+
+                // Total Price
+                gfx.DrawRectangle(XBrushes.LightGray, x, y, columnWidths[columnIndex], tableHeight);
                 string formattedTotalPrice = sales.TotalPrice?.ToString("C") ?? "N/A";
-                gfx.DrawString(formattedTotalPrice, font, XBrushes.Black, new XRect(x, y, columnWidths[4], tableHeight), XStringFormats.Center);
+                gfx.DrawString(formattedTotalPrice, font, XBrushes.Black, new XRect(x, y, columnWidths[columnIndex], tableHeight), XStringFormats.Center);
 
                 y += tableHeight;
             }
 
-            // Save
-            string filename = "SalesReport.pdf";
-            document.Save(filename);
-            // Open
-            Process.Start("explorer.exe", filename);
+            MemoryStream stream = new MemoryStream();
+            document.Save(stream, false); // Save in MemoryStream
+            stream.Position = 0; // Restore stream
+
+            return stream;
         }
     }
 }
