@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RSMFinalProjectAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0e0ef58ee008ead8c2f13fe8bae644c107eb1eda")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b05db944badf2634eda4d9d363594e6f037f398f")]
 [assembly: System.Reflection.AssemblyProductAttribute("RSMFinalProjectAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RSMFinalProjectAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -1,0 +1,23 @@
+.table-container {
+    font-size: 12px;
+}
+.table-container table {
+    border-collapse: collapse; /* Combine cell borders */
+    width: 100%; /* Adjust width as needed */
+  }
+  
+  .table-container thead th {
+    border-bottom: 2px solid #ccc; /* Add bottom border to headers */
+    padding: 10px;
+    text-align: left;
+  }
+  
+  .table-container tbody tr {
+    border-bottom: 1px solid #ddd; /* Add bottom border to each row */
+  }
+  
+  .table-container tbody th,
+  .table-container tbody td {
+    padding: 8px;
+  }
+  
