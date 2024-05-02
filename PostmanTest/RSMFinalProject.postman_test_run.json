@@ -1,0 +1,88 @@
+{
+	"id": "062f4401-8326-4fa5-a027-ed5dca24825b",
+	"name": "RSMFinalProject",
+	"timestamp": "2024-05-02T03:59:52.332Z",
+	"collection_id": "14883027-acf6c49c-c0a1-4ac0-a280-1fe6896b1457",
+	"folder_id": 0,
+	"environment_id": "0",
+	"totalPass": 0,
+	"delay": 0,
+	"persist": true,
+	"status": "finished",
+	"startedAt": "2024-05-02T03:59:49.880Z",
+	"totalFail": 0,
+	"results": [
+		{
+			"id": "ebfdddbc-c9f0-40ac-8205-4aa303d64be7",
+			"name": "GetSalesReport",
+			"url": "http://localhost:5025/api/SalesReports/GetAll?pageNumber=1&pageSize=10&orderDate=2014-06-30",
+			"time": 788,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				788
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "92576f9c-a38b-40ae-bc56-bb3958e795fe",
+			"name": "GetSalesPerformance",
+			"url": "http://localhost:5025/api/SalesPerformance/GetAll?pageNumber=1&pageSize=1&productCategory=Bikes",
+			"time": 879,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				879
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "cc00f2aa-1eb7-4fe1-9f52-e6cebadee787",
+			"name": "GetSalesPdf",
+			"url": "http://localhost:5025/api/SalesReports/GetPdfReport?pageNumber=1&pageSize=10",
+			"time": 365,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				365
+			],
+			"allTests": [
+				{}
+			]
+		}
+	],
+	"count": 1,
+	"totalTime": 2032,
+	"collection": {
+		"requests": [
+			{
+				"id": "ebfdddbc-c9f0-40ac-8205-4aa303d64be7",
+				"method": "GET"
+			},
+			{
+				"id": "92576f9c-a38b-40ae-bc56-bb3958e795fe",
+				"method": "GET"
+			},
+			{
+				"id": "cc00f2aa-1eb7-4fe1-9f52-e6cebadee787",
+				"method": "GET"
+			}
+		]
+	}
+}

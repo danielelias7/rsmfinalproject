@@ -1,0 +1,161 @@
+{
+	"info": {
+		"_postman_id": "acf6c49c-c0a1-4ac0-a280-1fe6896b1457",
+		"name": "RSMFinalProject",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14883027"
+	},
+	"item": [
+		{
+			"name": "GetSalesReport",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5025/api/SalesReports/GetAll?pageNumber=1&pageSize=10&orderDate=2014-06-30",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5025",
+					"path": [
+						"api",
+						"SalesReports",
+						"GetAll"
+					],
+					"query": [
+						{
+							"key": "pageNumber",
+							"value": "1"
+						},
+						{
+							"key": "pageSize",
+							"value": "10"
+						},
+						{
+							"key": "orderId",
+							"value": "43661",
+							"disabled": true
+						},
+						{
+							"key": "productCategory",
+							"value": "Bikes",
+							"disabled": true
+						},
+						{
+							"key": "productName",
+							"value": "AWC",
+							"disabled": true
+						},
+						{
+							"key": "orderDate",
+							"value": "2014-06-30"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetSalesPerformance",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5025/api/SalesPerformance/GetAll?pageNumber=1&pageSize=1&productCategory=Bikes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5025",
+					"path": [
+						"api",
+						"SalesPerformance",
+						"GetAll"
+					],
+					"query": [
+						{
+							"key": "pageNumber",
+							"value": "1"
+						},
+						{
+							"key": "pageSize",
+							"value": "1"
+						},
+						{
+							"key": "orderId",
+							"value": "43661",
+							"disabled": true
+						},
+						{
+							"key": "productCategory",
+							"value": "Bikes"
+						},
+						{
+							"key": "productName",
+							"value": "AWC",
+							"disabled": true
+						},
+						{
+							"key": "orderDate",
+							"value": "2014-06-30",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetSalesPdf",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5025/api/SalesReports/GetPdfReport?pageNumber=1&pageSize=10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5025",
+					"path": [
+						"api",
+						"SalesReports",
+						"GetPdfReport"
+					],
+					"query": [
+						{
+							"key": "pageNumber",
+							"value": "1"
+						},
+						{
+							"key": "orderId",
+							"value": "43661",
+							"disabled": true
+						},
+						{
+							"key": "productName",
+							"value": "AWC",
+							"disabled": true
+						},
+						{
+							"key": "orderDate",
+							"value": "2014-06-30",
+							"disabled": true
+						},
+						{
+							"key": "productCategory",
+							"value": "Bikes",
+							"disabled": true
+						},
+						{
+							"key": "pageSize",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
